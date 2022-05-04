@@ -92,7 +92,7 @@ class _RandomWordsState extends State<RandomWords> with TickerProviderStateMixin
   }
 
   //Function that navigates to and constructs the Favorites page
-  void _pushSaved() {
+  void _pushFavorites() {
     Navigator.of(context).push(
 
       //MaterialPageRoute is needed to transition the entire page
@@ -100,7 +100,7 @@ class _RandomWordsState extends State<RandomWords> with TickerProviderStateMixin
         builder: (context) {
           return Scaffold(
             appBar: AppBar(
-              title: const Text('Saved Suggestions'),
+              title: const Text('Favorites'),
             ),
 
             //ListView build is needed in order to identify items in the favorites list
@@ -160,7 +160,7 @@ class _RandomWordsState extends State<RandomWords> with TickerProviderStateMixin
         actions: [
           IconButton(
             icon: const Icon(Icons.list),
-            onPressed: _pushSaved,
+            onPressed: _pushFavorites,
             tooltip: 'My Favorites',
           ),
         ],
