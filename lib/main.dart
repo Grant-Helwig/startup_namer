@@ -63,7 +63,7 @@ class _RandomWordsState extends State<RandomWords> with TickerProviderStateMixin
   final _biggerFont = const TextStyle(fontSize: 18);
 
   //Future List used for Words taken from the API call
-  late Future<List<dynamic>> _futureSuggestions;
+  late Future<List<String>> _futureSuggestions;
 
   //Animation controller is needed for loading indicator
   late AnimationController controller;
@@ -167,7 +167,7 @@ class _RandomWordsState extends State<RandomWords> with TickerProviderStateMixin
       ),
 
       //FutureBuilder is needed to account for asynchronous objects
-      body: FutureBuilder<List<dynamic>>(
+      body: FutureBuilder<List<String>>(
 
         //Suggestions list is added as 'future' and accessed through suggestionsSnapshot
         future: _futureSuggestions,
@@ -242,24 +242,30 @@ class _RandomWordsState extends State<RandomWords> with TickerProviderStateMixin
 }
 
 //API call for word list that logs failures
-Future<List<dynamic>> fetchWords(http.Client http) async {
+Future<List<String>> fetchWords(http.Client http) async {
+
   final response =
-      await http.get(Uri.parse('https://random-word-api.herokuapp.com/all'));
+    await http.get(Uri.parse('https://random-word-api.herokuapp.com/word?number=100'));
 
   if (response.statusCode == 200) {
-    List<dynamic> json = jsonDecode(response.body);
-    return json;
-  } else {
     log(response.statusCode.toString());
     log(response.body);
+    List<dynamic> json = jsonDecode(response.body);
+    return List<String>.from(json);
+
+  } else {
+    log(response.statusCode.toString());
     return ["Failed to generate names"];
   }
 }
 
 //Returns a list of random wordpairs of length n
-List<WordPair> getRandomWords(List<dynamic> allWords, int n) {
+List<WordPair> getRandomWords(List<String> allWords, int n) {
   List<WordPair> allWordPairs = <WordPair>[];
   math.Random random = math.Random();
+  if(allWords.isEmpty){
+    return allWordPairs;
+  }
   for (int i = 0; i < n; i++) {
     allWordPairs.add(WordPair(allWords[random.nextInt(allWords.length)],
         allWords[random.nextInt(allWords.length)]));

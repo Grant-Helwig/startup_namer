@@ -6,6 +6,7 @@ import 'package:http/http.dart';
 import 'package:http/testing.dart';
 
 void main() {
+
   //Group for test organization
   group('NameGeneratorAPI', () {
     test('returns list of only strings when http response is successful',
