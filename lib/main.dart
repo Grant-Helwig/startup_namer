@@ -154,7 +154,7 @@ class _RandomWordsState extends State<RandomWords> with TickerProviderStateMixin
         title: const Text('Startup Name Generator'),
         actions: [
           IconButton(
-            icon: const Icon(Icons.list),
+            icon: const Icon(Icons.other_houses),
             onPressed: _pushFavorites,
             tooltip: 'My Favorites',
           ),
