@@ -1,11 +1,6 @@
-// Copyright 2018 The Flutter team. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
-
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:math' as math;
-
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -62,7 +57,7 @@ class _RandomWordsState extends State<RandomWords> with TickerProviderStateMixin
   //TextStyle used for all list fonts
   final _biggerFont = const TextStyle(fontSize: 18);
 
-  //Future List used for Words taken from the API call
+  //Future List used for words taken from the API call
   late Future<List<String>> _futureSuggestions;
 
   //Animation controller is needed for loading indicator
@@ -132,13 +127,13 @@ class _RandomWordsState extends State<RandomWords> with TickerProviderStateMixin
                       setState(() {
 
                         //Copies the name to your clipboard
-                        Clipboard.setData(
-                            ClipboardData(text: _favorites[i].asPascalCase));
+                        Clipboard.setData(ClipboardData(text: _favorites[i].asPascalCase));
 
                         //Displays a confirmation message at the bottom of the app
                         ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
-                                content: Text("Copied to Clipboard"))
+                                content: Text("Copied to Clipboard")
+                            )
                         );
                       });
                     },
@@ -209,7 +204,7 @@ class _RandomWordsState extends State<RandomWords> with TickerProviderStateMixin
                     semanticLabel: alreadySaved ? 'Remove from saved' : 'Save',
                   ),
 
-                  //Add the name to the favorites list if it selected
+                  //Add the name to the favorites list if it is selected
                   onTap: () {
                     setState(() {
                       if (alreadySaved) {
@@ -241,18 +236,15 @@ class _RandomWordsState extends State<RandomWords> with TickerProviderStateMixin
   }
 }
 
-//API call for word list that logs failures
+//API call for word list
 Future<List<String>> fetchWords(http.Client http) async {
 
   final response =
     await http.get(Uri.parse('https://random-word-api.herokuapp.com/word?number=100'));
 
   if (response.statusCode == 200) {
-    log(response.statusCode.toString());
-    log(response.body);
     List<dynamic> json = jsonDecode(response.body);
     return List<String>.from(json);
-
   } else {
     log(response.statusCode.toString());
     return ["Failed to generate names"];
@@ -267,9 +259,10 @@ List<WordPair> getRandomWords(List<String> allWords, int n) {
     return allWordPairs;
   }
   for (int i = 0; i < n; i++) {
-    allWordPairs.add(WordPair(allWords[random.nextInt(allWords.length)],
-        allWords[random.nextInt(allWords.length)]));
-    log(allWordPairs[i].asPascalCase);
+    allWordPairs.add(WordPair(
+        allWords[random.nextInt(allWords.length)],
+        allWords[random.nextInt(allWords.length)]
+    ));
   }
   return allWordPairs;
 }

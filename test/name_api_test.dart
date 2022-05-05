@@ -9,7 +9,7 @@ void main() {
 
   //Group for test organization
   group('NameGeneratorAPI', () {
-    test('returns list of only strings when http response is successful',
+    test('returns list of strings when http response is successful',
             () async {
 
           // Mock the API call to return a json response with http status 200 Ok
@@ -45,7 +45,7 @@ void main() {
 
       // Mock the API call to return an empty json response with http status 404
       final mockHTTPClient = MockClient((request) async {
-        final response = ["Failed to generate names"];
+        final response = [];
         return Response(jsonEncode(response), 404);
       });
 
